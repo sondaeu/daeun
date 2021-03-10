@@ -1,0 +1,10 @@
+127.0.0.1 - - [29/Jan/2021:10:18:44 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:10:18:47 +0900] "GET /hotel/ HTTP/1.1" 200 10855
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:10:18:47 +0900] "GET /hotel/resources/css/ad.css;jsessionid=38F333B3FDE1FDA83DB6CA00EC87C065 HTTP/1.1" 200 86
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:10:18:47 +0900] "GET /hotel/resources/css/header.css;jsessionid=38F333B3FDE1FDA83DB6CA00EC87C065 HTTP/1.1" 200 853
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:10:18:47 +0900] "GET /hotel/resources/css/default.css;jsessionid=38F333B3FDE1FDA83DB6CA00EC87C065 HTTP/1.1" 200 2842
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:10:18:48 +0900] "GET /hotel/resources/img/ad.png;jsessionid=38F333B3FDE1FDA83DB6CA00EC87C065 HTTP/1.1" 200 67561
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:10:18:48 +0900] "GET /hotel/resources/img/ad.png;jsessionid=38F333B3FDE1FDA83DB6CA00EC87C065 HTTP/1.1" 200 67561
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:10:18:48 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+127.0.0.1 - - [29/Jan/2021:13:07:52 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [29/Jan/2021:13:07:53 +0900] "GET /hotel/ HTTP/1.1" 500 4864

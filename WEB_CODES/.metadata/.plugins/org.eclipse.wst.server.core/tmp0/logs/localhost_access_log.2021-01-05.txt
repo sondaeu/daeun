@@ -1,0 +1,8 @@
+127.0.0.1 - - [05/Jan/2021:18:24:44 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [05/Jan/2021:18:24:45 +0900] "GET /hotel/ HTTP/1.1" 200 10697
+0:0:0:0:0:0:0:1 - - [05/Jan/2021:18:24:51 +0900] "GET /hotel/member/postcode HTTP/1.1" 200 5530
+0:0:0:0:0:0:0:1 - - [05/Jan/2021:18:25:01 +0900] "GET /hotel/member/postcode?x=21&y=14&where=nexearch&ie=utf8&X_CSA=address_search&query= HTTP/1.1" 200 5530
+0:0:0:0:0:0:0:1 - - [05/Jan/2021:18:26:21 +0900] "GET /hotel/ HTTP/1.1" 200 10697
+0:0:0:0:0:0:0:1 - - [05/Jan/2021:18:26:28 +0900] "GET /hotel/member/postcode HTTP/1.1" 200 5599
+0:0:0:0:0:0:0:1 - - [05/Jan/2021:18:26:32 +0900] "GET /hotel/member/postcode?x=0&y=0&where=nexearch&ie=utf8&X_CSA=address_search&query= HTTP/1.1" 200 5599
+0:0:0:0:0:0:0:1 - - [05/Jan/2021:18:26:41 +0900] "GET /hotel/member/postcode?x=17&y=4&where=nexearch&ie=utf8&X_CSA=address_search&query= HTTP/1.1" 200 5599

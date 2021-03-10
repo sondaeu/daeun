@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ani.project.hotel.HotelBoardMapper">
+	<resultMap type="ProductVO" id="ProductVO">
+		<result column="num_pro" property="numPro"/>
+		<result column="name_pro" property="namePro"/>
+		<result column="price_pro" property="pricePro"/>
+		<result column="sale_pro" property="salePro"/>
+		<result column="sold_pro" property="soldPro"/>
+	</resultMap>
+
+	<resultMap type="HotelVO" id="HotelVO">
+		<id column="num_hotel" property="numHotel"/>
+		<result column="info_hotel" property="infoHotel"/>
+		<result column="content_hotel" property="contentHotel"/>
+		<result column="powerlink" property="powerlink"/>
+		<result column="title_hotel" property="titleHotel"/>
+		<result column="hotelimg" property="hotelImg"/>
+		<result column="checkhotel" property="checkHotel"/>
+		
+		
+		<association property="ProductVO" javaType="ProductVO">
+		<id column="num_pro" property="numPro"/>
+		<result column="name_pro" property="namePro"/>
+		<result column="price_pro" property="pricePro"/>
+		<result column="sale_pro" property="salePro"/>
+		<result column="sold_pro" property="soldPro"/>
+		</association>
+	</resultMap>
+	
+	<!-- ======================================================================= -->
+	<!-- 검색기능 추가코드 -->
+	<!-- 검색 조건에 따라 다른 데이터 조회 -->
+	<sql id="searchCondition">
+		<if test="conditions != null">
+			<!-- 조건 : 지역 -->
+			<if test="conditions == 'district'.toString()">
+				 where h.checkHotel = 1 and m.${address} like #{districtName} || '%'
+			</if>
+			<!-- 조건 : 호텔명 -->
+			<if test="conditions == 'hotel'.toString()">
+				 where h.checkHotel = 1 and m.${name} like '%' || #{hotelName} || '%'
+			</if>
+		</if>
+	</sql>
+	<!-- ======================================================================= -->
+
+	<insert id="insert">
+		insert into ${hotel_board} (${infoHotel}, ${contentHotel}, ${powerlink}, ${titleHotel}, ${id}, ${hotelImg})
+		values (#{infoHotel}, #{contentHotel}, #{powerlink}, #{titleHotel}, #{id}, #{hotelImg})
+	</insert>
+
+	<select id="select_all" resultType="AllInfoVO">
+        SELECT h.*, p.*
+        FROM ${hotel_board} h join ${member} p
+        on h.${id} = p.${id}
+        WHERE checkHotel = 0
+    </select>
+	
+	<select id="select_by_numHotel" resultType="HotelBoardVO">
+		select * from ${hotel_board}
+		where ${numHotel} = #{numHotel}
+	</select>
+	
+	<update id="update">
+		update ${hotel_board}
+		set ${infoHotel} = #{infoHotel}, ${contentHotel} = #{contentHotel}, ${powerlink} = #{powerlink}, ${titleHotel} = #{titleHotel}, ${hotelImg} = #{hotelImg}
+		where ${numHotel} = #{numHotel}
+	</update>
+	
+	<delete id="delete">
+		delete from ${hotel_board}
+		where ${numHotel} = #{numHotel}
+	</delete>
+	
+	<!-- ======================================================== -->
+	<!-- 검색기능 추가코드 -->
+	<select id="paging" resultType="HotelVO">
+	 select 
+		b.*
+		from ( 
+			select rownum rn, a.* 
+			from (
+				select *
+				  from ${member} m
+			      join ${hotel_board} h on m.${id} = h.${id}
+				  join ${product} p on h.${numHotel} = p.${numHotel}
+  					<!-- 검색조건 불러오기 -->
+  					<include refid="searchCondition"></include>
+  				order by p.${pricePro}
+			)a
+		)b 
+		where rn between #{start} and #{end}
+	</select>
+	<!-- ======================================================== --> 
+		
+	<select id="paging_powerlink">
+		select 
+		b.${numHotel}, b.${infoHotel}, b.${powerlink}, b.${titleHotel} 
+		from ( 
+			select rownum rn, a.* 
+			from (
+				select * from ${hotel_board} order by ${powerlink} desc 
+			)a
+		)b 
+		where rn between #{start} and #{end}
+	</select>
+		
+	<select id="select_by_info" resultType="HotelBoardVO">
+		select * from ${hotel_board}
+		where ${infoHotel} like #{infoHotel}
+		order by ${numHotel} desc
+	</select>
+	
+	<select id="select_numhotel" resultType="HotelBoardVO">
+		select * from ${hotel_board} 
+		where ${id} = #{id}
+		and ${titleHotel} = #{titleHotel}
+	</select>
+	
+	<!-- ================================================== -->
+	<!-- 검색기능 추가코드 -->
+	<select id="total_count" resultType="Integer">
+		select count(*) total_cnt
+			from ${member} m 
+			join ${hotel_board} h on m.${id} = h.${id}
+			join ${product} p on h.${numHotel} = p.${numHotel}
+	  		<!-- 검색조건 불러오기 -->
+	  		<include refid="searchCondition"></include>
+  	</select>
+  	<!-- ================================================== -->
+	
+	<update id="admin_update">
+        update ${hotel_board}
+        set ${checkHotel} =
+        #{checkHotel}
+        where
+        ${numHotel} = #{numHotel}
+    </update>
+    
+   
+</mapper>

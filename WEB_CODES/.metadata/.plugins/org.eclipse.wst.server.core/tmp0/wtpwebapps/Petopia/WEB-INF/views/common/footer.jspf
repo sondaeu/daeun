@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style type="text/css">
+.footer{
+	margin-bottom: 40px;
+}
+</style>
+<meta charset="UTF-8">
+
+</head>
+<body>
+<div class="footer">
+<p>
+상호명 : 멍멍이의 하루 | 대표 ㅇㅇㅇ | 개인정보보호책임자 ㅇㅇㅇ | 사업자등록번호 00-00-00000 사업자정보확인 | 통신판매업신고번호 2021-서울-0000
+주소 서울특별시 구로구 시흥대로 163길 , 주호타워 2층 <Br> 이메일 ㅇㅇㅇ@naver.com | 마케팅/제휴 문의 ㅇㅇㅇ@naver.com
+</p>
+</div>
+</body>
+</html>

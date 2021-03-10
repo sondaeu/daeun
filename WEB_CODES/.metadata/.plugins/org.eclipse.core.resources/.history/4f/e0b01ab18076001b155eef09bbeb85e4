@@ -1,0 +1,95 @@
+package ani.project.hotel.pageutil;
+
+// 페이지 번호들의 링크를 만들기 위한 유틸리티 클래스
+public class AdminMemberPageMaker {
+	private AdminMemberCriteria acriteria;
+	private int atotalCount; // 전체 게시글 개수
+	private int anumsOfPageLinks; // 페이지 번호 링크의 개수
+	private int astartPageNo; // 시작 페이지 링크 번호
+	private int aendPageNo; // 끝 페이지 링크 번호
+	private boolean ahasPrev; // 화면에 보이는 시작 페이지 번호보다 작은 숫자의 페이지가 있는 지
+	private boolean ahasNext; // 화면에 보이는 끝 페이지 번호보다 큰 숫자의 페이지가 있는 지
+	
+	public AdminMemberPageMaker() {
+		this.anumsOfPageLinks = 10;
+	}
+	
+	public AdminMemberCriteria getAcriteria() {
+		return acriteria;
+	}
+	
+	public void setAcriteria(AdminMemberCriteria acriteria) {
+		this.acriteria = acriteria;
+	}
+	
+	public int getAtotalCount() {
+		return atotalCount;
+	}
+	
+	public void setAtotalCount(int atotalCount) {
+		this.atotalCount = atotalCount;
+	}
+	
+	public int getAnumsOfPageLinks() {
+		return anumsOfPageLinks;
+	}
+	
+	public int getAstartPageNo() {
+		return astartPageNo;
+	}
+	
+	public int getAendPageNo() {
+		return aendPageNo;
+	}
+	
+	public boolean isAhasPrev() {
+		return ahasPrev;
+	}
+	
+	public boolean isAhasNext() {
+		return ahasNext;
+	}
+	
+	// startPageNo, endPageNo, hasPrev, hasNext 값을 계산 및 세팅
+	public void setA_pageData() {
+		int atotalLinkNo = (int) Math.ceil((double) atotalCount / acriteria.getAnumsPerPage());
+		int atemp = (int) Math.ceil((double) acriteria.getApage() / anumsOfPageLinks) * anumsOfPageLinks;
+		
+		if (atemp > atotalLinkNo) {
+			aendPageNo = atotalLinkNo;
+		} else {
+			aendPageNo = atemp;
+		}
+		
+		astartPageNo = ((aendPageNo - 1) / anumsOfPageLinks) * anumsOfPageLinks + 1;
+		
+		if (astartPageNo == 1) {
+			ahasPrev = false;
+		} else {
+			ahasPrev = true;
+		}
+		
+		if (aendPageNo * acriteria.getAnumsPerPage() >= atotalCount) {
+			ahasNext = false;
+		} else {
+			ahasNext = true;
+		}
+		// Math.ceil (올림)
+		// Math.floor (버림
+
+	}
+	
+} // end PageMaker
+
+
+
+
+
+
+
+
+
+
+
+
+

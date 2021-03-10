@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+table, th, td {
+  border-style : solid;
+  border-width : 1px;
+  text-align : center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<meta charset="UTF-8">
+<title>회원관리 수정</title>
+</head>
+<body>
+	<div class="container">
+		<strong>${memberVO.id }</strong>님의 정보입니다.<br>
+		<table class="tbl_model" style="text-align: center;">
+			<tbody>
+				<tr>
+					<th>아이디</th>
+					<td><input type="text" id="id" name="id" value="${memberVO.id}" />
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input type="text" id="password" name="password" value="${memberVO.password}" />
+				</tr>
+				<tr>
+					<th>성명/상호명</th>
+					<td><input type="text" id="name" name="name" value="${memberVO.name}" />
+				</tr>
+				<tr>
+					<th>이메일</th>
+					<td><input type="text" id="email" name="email" value="${memberVO.email}" />
+				</tr>
+				<tr>
+					<th>연락처</th>
+					<td><input type="text" id="contact" name="contact" value="${memberVO.contact}" />
+				</tr>
+				<tr>
+					<th>소유/취급 반려동물</th>
+					<td><input type="text" id="animals" name="animals" value="${memberVO.animals}" />
+				</tr>
+				<tr>
+					<th>우편번호</th>
+					<td>
+						<input type="text" id="zipcode" name="zipcode" value="${memberVO.zipcode}" readonly />
+						<input type="button" id="btnFindAddress" value="검색">
+					</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td><input type="text" id="address" name="address" value="${memberVO.address}" readonly />
+				</tr>
+				<tr>
+					<th>상세주소</th>
+					<td><input type="text" id="detailaddress" name="detailaddress" value="${memberVO.detailaddress}" readonly />
+				</tr>
+				<tr>
+					<th>생년월일</th>
+					<td><input type="text" id="birthday" name="birthday" value="${memberVO.birthday}" />
+				</tr>
+				<tr>
+					<th>메모</th>
+					<td><input type="text" id="note" name="note" value="${memberVO.note}" />
+				</tr>
+				<tr>
+					<th>권한</th>
+					<td><input type="text" id="authority" name="authority" value="${memberVO.authority}" />
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script type="text/javascript">
+		
+	
+	</script>
+</body>
+</html>

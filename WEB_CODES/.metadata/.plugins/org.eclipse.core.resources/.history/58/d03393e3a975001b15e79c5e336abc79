@@ -1,0 +1,35 @@
+package ani.project.hotel.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import ani.project.hotel.service.MemberService;
+
+@RestController
+@RequestMapping(value="/log/idFind")
+public class LoginRESTController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginRESTController.class);
+	
+	@Autowired
+	private MemberService MemberService;
+	/*
+	@PostMapping()
+	public String idFindPOST(@RequestBody MemberVO vo) {
+		LOGGER.info("idFindPOST() »£√‚ : name = " + vo.getName() + ", email = " + vo.getEmail());
+		
+		MemberVO result = MemberService.readId(vo);
+		String userId = result.getId();
+		System.out.println(result);
+		if (userId != null) { 
+			return userId; 
+		} else { 
+			return null; 
+		}
+		
+	}
+	*/
+				
+} // end LoginRESTController

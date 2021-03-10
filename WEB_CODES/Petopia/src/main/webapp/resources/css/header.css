@@ -1,0 +1,13 @@
+@charset "utf-8";
+header {text-align: center; position: relative;}
+header h1 {position: absolute; left: 1px; top: 0;display: inline-block;}
+header h1 a{display: block; width: 220px; height: 105px; line-height: 105px;}
+header .lnb li {display: inline-block;}
+header .lnb li a{left: 1px; display: block; height: 41px; padding: 0 35px; font-size: 17px; color: #333;
+line-height: 41px;}
+header .lnb li a:hover {color: #2d5b79; font-weight: bold; text-decoration: underline;}
+header .spot {position: absolute; right: 1px; top: 0;}
+header .spot li {float: left;}
+header .spot li a{display: block; height: 81px; padding: 0 10px; line-height: 101px; font-size: 13px;}
+header .spot li a:hover {color: #2d5b79; font-weight: bold; text-decoration: underline;}
+.header{height: 150px;}

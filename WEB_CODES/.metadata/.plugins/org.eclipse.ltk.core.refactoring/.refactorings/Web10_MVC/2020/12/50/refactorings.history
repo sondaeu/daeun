@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;LoginController.java&apos; to &apos;Petopia/src/main/java/ani.project.hotel.controller&apos;&#x0D;&#x0A;- Original project: &apos;Web10_MVC&apos;&#x0D;&#x0A;- Destination element: &apos;Petopia/src/main/java/ani.project.hotel.controller&apos;&#x0D;&#x0A;- Original element: &apos;edu.web.login.controller.LoginController.java&apos;" description="Copy compilation unit" destination="=Petopia/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;ani.project.hotel.controller" element1="/src&lt;edu.web.login.controller{LoginController.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1607701535038" units="1" version="1.0"/>
+</session>

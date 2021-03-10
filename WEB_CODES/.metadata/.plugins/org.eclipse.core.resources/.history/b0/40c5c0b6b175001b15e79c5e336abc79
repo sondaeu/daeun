@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+table, th, td {
+  border-style : solid;
+  border-width : 1px;
+  text-align : center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+}
+</style>
+<meta charset="UTF-8">
+<title>아이디 찾기</title>
+</head>
+<body>
+	<h1>아이디 찾기</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>아이디 찾기</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>아이디가 존재하지 않습니다.</td>
+			</tr>
+			<tr>
+				<td>
+					<form action="/hotel/log/find" method="post">
+					<input type="submit" value="이전">
+					</form>	
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

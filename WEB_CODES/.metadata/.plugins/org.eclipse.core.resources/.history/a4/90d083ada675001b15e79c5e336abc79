@@ -1,0 +1,153 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+table, th, td {
+  border-style : solid;
+  border-width : 1px;
+  text-align : center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+}
+</style>
+
+<meta charset="UTF-8">
+<title>아이디/비밀번호 찾기</title>
+</head>
+<body>
+	<table>
+		<tbody>
+			<tr>
+				<td>아이디/비밀번호 찾기</td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<form action="/hotel/log/idFind" method="post" id="idFind" name="idFind">
+										<table>
+											<tbody>
+												<tr>
+													<td>아이디 찾기</td>
+												</tr>
+											</tbody>
+										</table>
+										<table>
+											<tbody>
+												<tr>
+													<td>이름</td>
+													<td><input type="text" id="name" name="name"></td>
+													<td>
+														<div><input type="button" id="btnIdFind" name="btnIdFind" value="아이디 찾기" onClick="fu_idFind()"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>이메일</td>
+													<td><input type="text" id="email" name="email"></td>
+												</tr>
+											</tbody>											
+										</table>
+									</form>
+									<form action="pw_find_ok.php" method="post" id="pwFind" name="pwFind">
+										<table>
+											<tbody>
+												<tr>
+													<td>비밀번호 찾기</td>
+												</tr>
+											</tbody>
+										</table>
+										<table>
+											<tbody>
+												<tr>
+													<td>아이디</td>
+													<td><input type="text" id="id" name="id"></td>
+													<td>
+														<div><input type="button" id="btnPwFind" name="btnPwFind" value="비밀번호 찾기" onClick="fu_pwFind()"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>이메일</td>
+													<td><input type="text" id="email" name="email"></td>
+												</tr>
+											</tbody>											
+										</table>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<div><a href="self.close()">닫기</a></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<script>
+	function fu_idFind() {
+	    var idFind = document.idFind;
+
+	    if(idFind.name.value == "") {
+            alert("이름을 입력해주세요.");
+            idFind.name.focus();
+            return;
+	    }
+	    
+		if(idFind.email.value == "") {
+			alert("이메일을 입력해주세요.");
+	        idFind.email.focus();
+	        return;
+	    }
+
+		$.ajax({
+			type : 'post',
+			url : '/idFind'
+			
+		})
+		
+		idFind.submit();
+	}
+		
+	function fu_pwFind() {
+	    var pwFind = document.pwFind;
+	
+	    if(pwFind.id.value == "") {
+	    	alert("아이디를 입력해주세요.");
+	        pwFind.id.focus();
+	        return;
+	    }
+	    
+	    if(pwFind.email.value == "") {
+	    	alert("이메일을 입력해주세요.");
+	        pwFind.email.focus();
+	        return;
+	    }
+		
+	    pwFind.submit();
+	}
+	</script>
+</body>
+</html>

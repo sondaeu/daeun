@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>멍멍이의 하루</title>
+<link href="<c:url value="/resources/css/default.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/header.css" />"
+	rel="stylesheet">
+</head>
+<body>
+	<header>
+		<div class="container" style="border-bottom:1px solid #e9ecef;">
+		<div class ="header">
+		<h1>
+			<a href="/hotel/main/aniHotel"><img src="<c:url value="/resources/img/logo3.png" />"></a>
+		</h1>
+		<h2 class="hide">대메뉴</h2>
+		<h2 class="hide">로그인메뉴</h2>
+		<nav class="spot">
+			<ul>
+
+				
+				<c:if test="${empty SessionId }">
+					<li><a href="/hotel/log/login">로그인</a></li>
+					<li><a href="/hotel/member/newMember">회원가입</a></li>
+				</c:if>
+				<c:if test="${not empty SessionId }">
+				<c:if test="${SessionAuth eq '2' }">
+					<li><a href="/hotel/member/attentionList">장바구니</a></li>
+				</c:if>
+					<li><a href="/hotel/member/MyPageSelect">${SessionId }님의 정보</a></li>
+					<li><a href="/hotel/log/logout">로그아웃</a></li>
+				</c:if>
+
+			</ul>
+		</nav>
+		</div>
+		</div>
+	</header>	
+</body>
+</html>

@@ -1,0 +1,102 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+table, th, td {
+  border-style : solid;
+  border-width : 1px;
+  text-align : center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<meta charset="UTF-8">
+<title>회원관리 검색</title>
+</head>
+<body>
+	<div class="search">
+		<div class="container">
+			<form action="/hotel/admin/memberList" method="get">
+				<div class="search-text">
+					<input type="checkbox" id="personal" name="sort" checked >
+					<label for="checkAll">개인</label>
+					<input type="checkbox" id="hotel" name="sort" checked >
+					<label for="banana">업체</label>
+					<input type="checkbox" id="manager" name="sort" checked >
+					<label for="orange">관리자</label>
+					<br>
+					<select id="conditions" name="conditions">
+						<option value="">전체검색</option>
+						<option value="id">아이디</option>
+						<option value="name">성명/상호명</option>
+						<option value="email">이메일</option>
+						<option value="contact">연락처</option>
+					</select>
+					<input type="text" id="keyword" name="keyword" value="${pageMaker.criteria.hotelName}">
+				</div>
+				<input type="submit" id="search-button" class="search-button" value="검색" />
+			</form>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			setSearchConditionSelect();
+			/* 파라미터 관리 */
+			function setSearchConditionSelect() {
+				var searchCondition = $('#conditions');
+				var p_keyword = '${AdminMemberPageMaker.AdminMemberCriteria.keyword}'; // 검색어
+				
+				/* 초기값 설정 */
+				if (p_keyword == '') {
+					searchCondition.val('전체검색').prop("selected", true); // 검색 컨디션
+					$("input:checkbox[name='sort']").prop("checked", true);
+				}
+			}
+			
+			/* 라디오박스 '지역' 클릭 이벤트 */
+			$("#district").click(function() {
+				$("#hotelName").hide();
+				$("#hotelName").val(''); // 호텔명 초기화
+				$("#districtName").show();
+				$("#hotelName").attr("type", "hidden");
+
+			});
+
+			/* 라디오박스 '호텔명' 클릭 이벤트 */
+			$("#hotel").click(function() {
+				$("#hotelName").show();
+				$("#districtName").hide();
+				$("#districtName").val('서울특별시'); // 지역 초기화
+				$("#hotelName").attr("type", "text");
+
+			});
+			
+			/* 체크인&체크아웃 날짜 연동 */
+			$('#checkIn').change(function() {
+				var input = document.getElementById("checkOut");
+				input.setAttribute("min", this.value); // 유동적 체크아웃 min value 관리
+
+				var checkInDate = new Date($('#checkIn').val());
+				var checkOutDate = new Date($('#checkOut').val());
+				if (checkInDate > checkOutDate) {
+					$('#checkOut').val(this.value); // 유동적 체크아웃 날짜 관리
+				}
+			});
+		
+		});
+		
+	</script>
+</body>
+</html>

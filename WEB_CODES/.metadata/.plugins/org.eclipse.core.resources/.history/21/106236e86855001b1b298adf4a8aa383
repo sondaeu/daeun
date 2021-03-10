@@ -1,0 +1,298 @@
+package ani.project.hotel.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import ani.project.hotel.domain.MemberVO;
+import ani.project.hotel.service.MemberService;
+
+@Controller
+@RequestMapping(value = "/hotel/member")
+public class MemberController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
+
+	@Autowired
+	private MemberService memberService;
+
+	@PostMapping("/join")
+	public String joinPOST(MemberVO vo, RedirectAttributes reAttr) { // RedirectAttributes : 재경로 위치에 속성값을 전송하는 객체
+		LOGGER.info("joinPOST() 호출");
+		LOGGER.info(vo.toString());
+		int result = memberService.createMember(vo);
+		LOGGER.info(Integer.toString(result));
+		if (result == 1) { // DB insert 성공
+			// "join_result"의 키이름을 가진 데이터 전송
+			reAttr.addFlashAttribute("join_result", "success");
+			return "redirect:/member/login"; // /member/login 경로로 이동
+		} else { // DB insert 실패
+			reAttr.addFlashAttribute("join_result", "fail");
+			return "redirect:/member/userJoinus"; // /member/join 경로로 이동
+		}
+	}
+	
+	// 도로명주소 팝업창 
+	@RequestMapping(value = "/postcode", method= {RequestMethod.GET, RequestMethod.POST})
+	public void postcodePopUp() {
+	LOGGER.info("postcodePopUp() 호출");
+	}
+	
+	@GetMapping("/myPage")
+	public void MyPage(String url, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("loginGet() 호출");
+		LOGGER.info("url : " + url); // 이전 경로(로그인을 위해 왔던)의 값 출력
+		model.addAttribute("targetUrl", url); // login.jsp에 url 정보 전송
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		String auth = (String) session.getAttribute("SessionAuth");
+		System.out.println("sessionId : " + id);
+		System.out.println("sessionAuth : " + auth);
+		MemberVO vo = memberService.read(id);
+		System.out.println(vo);
+		model.addAttribute("MemberVO", vo);
+	}
+	
+	@GetMapping("/companyMyPage")
+	public void companyMyPage(String url, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("loginGet() 호출");
+		LOGGER.info("url : " + url); // 이전 경로(로그인을 위해 왔던)의 값 출력
+		model.addAttribute("targetUrl", url); // login.jsp에 url 정보 전송
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		String auth = (String) session.getAttribute("SessionAuth");
+		System.out.println("sessionId : " + id);
+		System.out.println("sessionAuth : " + auth);
+		MemberVO vo = memberService.read(id);
+		System.out.println(vo);
+		model.addAttribute("MemberVO", vo);
+	}
+	
+	@GetMapping("/myPageSelect")
+	public String MyPageselect(HttpServletRequest req, RedirectAttributes rttr) {
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		String auth = (String) session.getAttribute("SessionAuth");
+		if (auth.equals("2")) {
+			return "redirect:/member/companyMyPage";
+		} else {
+			return "redirect:/member/update";
+		}
+	}
+	
+	@GetMapping("/update")
+	public void update(String url, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("loginGet() 호출");
+		LOGGER.info("url : " + url); // 이전 경로(로그인을 위해 왔던)의 값 출력
+		model.addAttribute("targetUrl", url); // login.jsp에 url 정보 전송
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		String auth = (String) session.getAttribute("SessionAuth");
+		System.out.println("sessionId : " + id);
+		System.out.println("sessionAuth : " + auth);
+		MemberVO vo = memberService.read(id);
+		System.out.println(vo);
+		model.addAttribute("MemberVO", vo);
+	}
+	
+	@PostMapping("/updateName")
+	public String updateName(String name, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("updateName() 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		MemberVO vo = new MemberVO();
+		vo.setId(id);
+		vo.setName(name);
+		System.out.println("vo : " + vo);
+		int result = memberService.updateName(vo);
+		if (result != 0) {
+			return "redirect:/member/update";
+		}
+		return "redirect:/member/update";
+	}
+	
+	@PostMapping("/updateContact")
+	public String updateContact(String contact, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("updateName() 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		MemberVO vo = new MemberVO();
+		vo.setId(id);
+		System.out.println("연락처: " + contact);
+		vo.setContact(contact);
+		System.out.println("vo : " + vo);
+		int result = memberService.updateContact(vo);
+		if (result != 0) {
+			return "redirect:/member/update";
+		}
+		return "redirect:/member/update";
+	}
+	
+	@PostMapping("/updateEmail")
+	public String updateEmail(String email, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("updateName() 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		MemberVO vo = new MemberVO();
+		vo.setId(id);
+		System.out.println("이메일: " + email);
+		vo.setEmail(email);
+		System.out.println("vo : " + vo);
+		int result = memberService.updateEmail(vo);
+		if (result != 0) {
+			return "redirect:/member/update";
+		}
+		return "redirect:/member/update";
+	}	
+	
+	@PostMapping("/updateAddress")
+	public String updateAddress(String address, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("updateName() 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		MemberVO vo = new MemberVO();
+		vo.setId(id);
+		System.out.println("주소 : " + address);
+		vo.setAddress(address);
+		System.out.println("vo : " + vo);
+		int result = memberService.updateAddress(vo);
+		if (result != 0) {
+			return "redirect:/member/update";
+		}
+		return "redirect:/member/update";
+	}	
+	
+	@PostMapping("/updateNote")
+	public String updateNote(String note, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("updateName() 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		MemberVO vo = new MemberVO();
+		vo.setId(id);
+		System.out.println("자기소개 : " + note);
+		vo.setNote(note);
+		System.out.println("vo : " + vo);
+		int result = memberService.updateNote(vo);
+		if (result != 0) {
+			return "redirect:/member/update";
+		}
+		return "redirect:/member/update";
+	}
+	
+	@GetMapping("/updatePassword")
+	public void Password(String url, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("loginGet() 호출");
+		LOGGER.info("url : " + url); // 이전 경로(로그인을 위해 왔던)의 값 출력
+		model.addAttribute("targetUrl", url); // login.jsp에 url 정보 전송
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		String auth = (String) session.getAttribute("SessionAuth");
+		System.out.println("sessionId : " + id);
+		System.out.println("sessionAuth : " + auth);
+		MemberVO vo = memberService.read(id);
+		System.out.println(vo);
+		model.addAttribute("MemberVO", vo);
+	}
+	
+	@PostMapping("/updatePassword")
+	public String updatePassword(String password, Model model, HttpServletRequest req, RedirectAttributes rttr) {
+		LOGGER.info("updateName() 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		MemberVO vo = new MemberVO();
+		vo.setId(id);
+		vo.setPassword(password);
+		System.out.println("vo : " + vo);
+		int result = memberService.updatePassword(vo);
+		if (result != 0) {
+			return "redirect:/member/MyPage";
+		}
+		return "redirect:/member/MyPage";
+	}
+	
+	@PostMapping("/deleteMember")
+	public String delete(HttpServletRequest req, RedirectAttributes rttr) {
+
+		LOGGER.info("delete 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("SessionId");
+		int result = memberService.deleteMember(id);
+		if (result == 1) {
+			session.removeAttribute("SessionId");
+			session.removeAttribute("sessionAuth");
+			return "redirect:/member/login";
+		} else {
+			return "redirect:/member/login";
+		}
+	}
+	
+	@GetMapping("/practice")
+	public void practice() {
+		
+	}
+	
+	@GetMapping("/practice2")
+	public void practice2() {
+		
+	}
+	
+	@GetMapping("/board")
+	public void board() {
+		
+	}
+	
+	@GetMapping("/newMember")
+	public void newMember() {
+	
+	}
+	
+	@GetMapping("/userJoinus")
+	public void userJoinus() {
+	
+	}
+	
+	@GetMapping("/accommJoinus")
+	public void accommJoinus() {
+		
+	}
+	
+	@GetMapping("/question")
+	public void question() {
+		
+	}
+	
+	@GetMapping("/note")
+	public void note() {
+		
+	}
+	
+	@GetMapping("/coupon")
+	public void coupon() {
+		
+	}
+	
+	@GetMapping("/reservationList")
+	public void reservationList() {
+		
+	}
+	
+	@GetMapping("/attentionList")
+	public void attentionList() {
+		
+	}
+	
+	@GetMapping("/delete")
+	public void delete() {
+		
+	}
+	
+} // end MemberController

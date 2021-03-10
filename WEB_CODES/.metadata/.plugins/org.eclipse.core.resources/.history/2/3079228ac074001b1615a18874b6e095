@@ -1,0 +1,193 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style type="text/css">
+.search {
+	height: 72px;
+	background-color: #51abf3;
+	overflow: hidden;
+	
+}
+
+.search-text {
+	width: 300px;
+	height: 50px;
+	margin-top: 10px;
+	float: left;
+	border: 1px solid #e9ecef;
+	margin-left : 5px;
+	margin-right: 5px;
+	background-color: white;
+	border-radius: 2px;
+}
+
+.search-date {
+	margin-top: 10px;
+	width: 300px;
+	height: 50px;
+	float: left;
+	border: 1px solid #e9ecef;
+	margin-right: 5px;
+	background-color: white;
+	border-radius: 2px;
+}
+.search-member {
+	margin-top: 10px;
+	width: 300px;
+	height: 50px;
+	float: left;
+	border: 1px solid #e9ecef;
+	margin-right: 5px;
+	background-color: white;
+	border-radius: 2px;
+}
+.search-button{
+	margin-top: 10px;
+    background-color: #e7f4fd;
+    color: #2b96ed;
+    height: 52px;
+    font-size: 16px;
+    width: 80px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#searchWord{
+	border: none;
+}
+
+.search-date label,
+.search-member label
+{
+	margin-left: 5px;
+}
+</style>
+<meta charset="UTF-8">
+<title>멍멍이의 하루</title>
+</head>
+<body>
+	<div class="search">
+		<div class="container">
+			<form action="/hotel/hotelboard/list" method="get" id="search-form" name="search-form" >
+				<div class="search-text">
+					<input type="radio" id="district" name="conditions" value="district">
+					<label for="district">지역</label>
+					<input type="radio" id="hotel" name="conditions" value="hotel">
+					<label for="sign">호텔명</label>
+						<br>
+						<select id="districtName" name="districtName" style="width: 300px; border: none; cursor: pointer;">
+							<option value="">선택</option>
+							<option value="서울특별시">서울특별시</option>
+							<option value="부산광역시">부산광역시</option>
+							<option value="대구광역시">대구광역시</option>
+							<option value="인천광역시">인천광역시</option>
+							<option value="광주광역시">광주광역시</option>
+							<option value="대전광역시">대전광역시</option>
+							<option value="울산광역시">울산광역시</option>
+							<option value="세종특별자치시">세종특별자치시</option>
+							<option value="경기도">경기도</option>
+							<option value="강원도">강원도</option>
+							<option value="충청북도">충청북도</option>
+							<option value="충청남도">충청남도</option>
+							<option value="전라북도">전라북도</option>
+							<option value="전라남도">전라남도</option>
+							<option value="경상북도">경상북도</option>
+							<option value="경상남도">경상남도</option>
+							<option value="제주특별자치도">제주특별자치도</option>
+						</select>
+					<input type="hidden" id="hotelName" name="hotelName" value="${pageMaker.criteria.hotelName}">
+				</div>
+				<div class="search-date">
+					<label>체크인</label>
+					<c:set var="now" value="<%=new Date()%>" />
+					<c:set var="sysDate">
+						<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />
+					</c:set>
+					<input type="date" id="checkIn" name="checkIn" style="border: none; text-indent: 5px;" value="${pageMaker.criteria.checkIn}" min="<c:out value="${sysDate}" />">
+				</div>
+				<div class="search-member">
+					<label>체크아웃</label>
+					<input type="date" id="checkOut" name="checkOut" value="${pageMaker.criteria.checkOut}" min="<c:out value="${sysDate}" />" style="border: none; text-indent: 5px;">
+				</div>
+				<input type="submit" id="search-button" class="search-button" value="검색" />
+			</form>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			setSearchConditionSelect();
+			/* 파라미터 관리 */
+			function setSearchConditionSelect() {
+				var districtCondition = $('#districtName');
+				var p_hotelName = '${pageMaker.criteria.hotelName}'; // 검색된 지역
+				var p_districtName = '${pageMaker.criteria.districtName}'; // 검색된 호텔명
+				
+				/* 초기값 설정 */
+				if (p_hotelName == '' && p_districtName == '') {
+					districtCondition.val('서울특별시').prop("selected", true);
+					document.getElementById('checkIn').valueAsDate = new Date(); // 체크인 날짜
+					document.getElementById('checkOut').valueAsDate = new Date(new Date().getTime() + 60 * 60 * 24 * 1000); // 체크아웃 날짜
+				}
+				
+				/* 라디오 버튼 관리 */
+				if (p_hotelName != '') {
+					$('input:radio[name=conditions]:input[value="hotel"]').attr("checked", true); // 라디오 버튼 : 호텔명
+					$("#hotelName").show();
+					$("#districtName").hide();
+					$("#districtName").val('서울특별시'); // 지역 초기화
+					$("#hotelName").attr("type", "text");
+				} else {
+					$('input:radio[name=conditions]:input[value="district"]').attr("checked", true); // 라디오 버튼 : 지역
+					$("#hotelName").hide();
+					$("#hotelName").val(''); // 호텔명 초기화
+					$("#districtName").show();
+					$("#hotelName").attr("type", "hidden");
+				}
+				
+				/* 지역 셀렉트 옵션 관리 */
+				if (p_districtName != '') {
+					districtCondition.val('${pageMaker.criteria.districtName}').prop("selected", true);
+				}
+			}
+			
+			/* 라디오박스 '지역' 클릭 이벤트 */
+			$("#district").click(function() {
+				$("#hotelName").hide();
+				$("#hotelName").val(''); // 호텔명 초기화
+				$("#districtName").show();
+				$("#hotelName").attr("type", "hidden");
+
+			});
+
+			/* 라디오박스 '호텔명' 클릭 이벤트 */
+			$("#hotel").click(function() {
+				$("#hotelName").show();
+				$("#districtName").hide();
+				$("#districtName").val('서울특별시'); // 지역 초기화
+				$("#hotelName").attr("type", "text");
+
+			});
+			
+			/* 체크인&체크아웃 날짜 연동 */
+			$('#checkIn').change(function() {
+				var input = document.getElementById("checkOut");
+				input.setAttribute("min", this.value); // 유동적 체크아웃 min value 관리
+
+				var checkInDate = new Date($('#checkIn').val());
+				var checkOutDate = new Date($('#checkOut').val());
+				if (checkInDate > checkOutDate) {
+					$('#checkOut').val(this.value); // 유동적 체크아웃 날짜 관리
+				}
+			});
+		
+		});
+		
+	</script>
+</body>
+</html>

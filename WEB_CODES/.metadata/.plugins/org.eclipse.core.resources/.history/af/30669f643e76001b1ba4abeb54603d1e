@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- DB 테이블과 컬럼들을 mapper 매핑을 위한 변수 선언 -->
+	<properties>
+		<property name="userFavorites" value="USER_FAVORITES"/>
+		<property name="numFavorites" value="NUM_FAVORITES" />
+	
+		<property name="hotel_board" value="hotel_board" />
+		<property name="numHotel" value="num_hotel" />
+		<property name="infoHotel" value="info_hotel" />
+		<property name="contentHotel" value="content_hotel" />
+		<property name="powerlink" value="powerlink" />
+		<property name="titleHotel" value="title_hotel" />
+		<property name="hotelImg" value="hotelimg" />
+		<property name="checkHotel" value="checkhotel"/>
+		<property name="rn" value="rn"/>
+		<property name="address" value="address"/>
+
+		<property name="questions" value="questions" />
+		<property name="numQt" value="num_qt" />
+		<property name="numHotel" value="num_hotel" />
+		<property name="id" value="id" />
+		<property name="titleQt" value="title_qt" />
+		<property name="dateQt" value="date_qt" />
+		<property name="secretCheck" value="secret_check" />
+		<property name="numAnswer" value="num_answer" />
+		<property name="contentQt" value="content_qt" />
+		<property name="numQtReply" value="num_qt_reply" />
+
+		<property name="review" value="review" />
+		<property name="numReview" value="num_review" />
+		<property name="numHotel" value="num_hotel" />
+		<property name="id" value="id" />
+		<property name="star" value="star" />
+		<property name="titleReview" value="title_review" />
+		<property name="contentReview" value="content_review" />
+		<property name="dateReview" value="date_review" />
+
+		<property name="product" value="product" />
+		<property name="numPro" value="num_pro" />
+		<property name="namePro" value="name_pro" />
+		<property name="pricePro" value="price_pro" />
+		<property name="salePro" value="sale_pro" />
+		<property name="soldPro" value="sold_pro" />
+		
+		<property value="MEMBER" name="member" />
+		<property value="ID" name="id" />
+		<property value="PASSWORD" name="password" />
+		<property value="authority" name="AUTHORITY" />
+		<property value="EMAIL" name="email" />
+		<property value="NAME" name="name" />
+		<property value="ANIMALS" name="animals" />
+		<property value="CONTACT" name="contact" />
+		<property value="BIRTHDAY" name="birthday" />
+		<property value="ADDRESS" name="address" />
+		<property value="NOTE" name="note" />
+		<property value="POINT" name="point" />
+		<property value="ZIPCODE" name="zipcode" />
+		<property value="DETAILADDRESS" name="detailaddress" />
+		
+		<property name="historyPurchase" value="HISTORY_PURCHASE"/>
+		<property name="numHistory" value="num_history"/>
+		<property name="checkIn" value="checkin"/>
+		<property name="checkOut" value="checkout"/>
+		<property name="numHotel" value="num_hotel"/>
+		<property name="numPro" value="numpro"/>
+		<property name="id" value="id"/>
+		<property name="timePro" value="timepro"/>
+		<property name="dataPro" value="datapro"/>
+		<property name="contentHistory" value="contenthistory"/>
+		<property name="pricePurchase" value="PRICE_PURCHASE"/>
+		
+		<property name="letter" value="letter"/>
+		<property name="numLetter" value="num_letter"/>
+		<property name="userId" value="userid"/>
+		<property name="hotelId" value="hotelid"/>
+		<property name="dataLetter" value="data_letter"/>
+		<property name="titleLetter" value="title_letter"/>
+		<property name="contentLetter" value="content_letter"/>
+		<property name="open" value="open"/>	
+
+	</properties>
+	
+	
+	<!-- Underscore 명명법을 Camel 명명번으로 매핑 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
+	<typeAliases>
+	 	<package name="ani.project.hotel.domain"/>
+	</typeAliases>
+	
+</configuration>

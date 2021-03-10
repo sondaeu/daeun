@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+}
+
+.search-button2 {
+    background-color: #e7f4fd;
+    color: #2b96ed;
+    height: 32px;
+    font-size: 16px;
+    width: 60px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<meta charset="UTF-8">
+<title>회원관리 검색</title>
+</head>
+<body>
+			<div style="overflow: hidden; height: 100px;">
+			<form action="/hotel/admin/memberList" method="get">
+				<div>
+					
+					<br>
+					<select id="conditions" name="conditions" style="cursor: pointer;">
+						<option value="">전체검색</option>
+						<option value="id">아이디</option>
+						<option value="name">이름/상호명</option>
+						<option value="email">이메일</option>
+						<option value="contact">연락처</option>
+					</select>
+					<input type="checkbox" id="personal" name="personal" value="personal" style="margin-left: 10px;">
+					<label for="normal">개인</label>
+					<input type="checkbox" id="hotel" name="hotel" value="hotel">
+					<label for="hotel">업체</label>
+					<input type="checkbox" id="manager" name="manager" value="manager">
+					<label for="manager">관리자</label><br>
+					
+					<input style="width: 200px;" type="text" id="keyword" name="keyword" value="${memberPageMaker.criteria.keyword}">
+				<input class="search-button2" type="submit" value="검색" />
+
+				</div>
+			</form>
+			</div>
+	<script>
+		$(document).ready(function() {
+			setSearchConditionSelect();
+			/* 파라미터 관리 */
+			function setSearchConditionSelect() {
+				var searchCondition = $('#conditions');
+				var	checkPersonal = '${memberPageMaker.criteria.personal}';
+				var checkHotel = '${memberPageMaker.criteria.hotel}';
+				var checkManager = '${memberPageMaker.criteria.manager}';
+				var p_keyword = '${memberPageMaker.criteria.keyword}'; // 검색어
+				
+				/* 초기값 설정 */
+				if (p_keyword == '') {
+					searchCondition.val('').prop("selected", true); // 검색 컨디션
+					$("input:checkbox[id='personal']").prop("checked", true);
+					$("input:checkbox[id='hotel']").prop("checked", true);
+					$("input:checkbox[id='manager']").prop("checked", true);
+				}
+				
+				if (p_keyword != '') {
+					searchCondition.val('${memberPageMaker.criteria.conditions}').prop("selected", true);
+					
+					if (checkPersonal != '') {
+						$("input:checkbox[id='personal']").prop("checked", true);
+					} else {
+						$("input:checkbox[id='personal']").prop("checked", false);
+					}
+					if (checkHotel != '') {
+						$("input:checkbox[id='hotel']").prop("checked", true);
+					} else {
+						$("input:checkbox[id='hotel']").prop("checked", false);
+					}
+					if (checkManager != '') {
+						$("input:checkbox[id='manager']").prop("checked", true);
+					} else {
+						$("input:checkbox[id='manager']").prop("checked", false);
+					}
+				}
+			}
+						
+		});
+			
+	</script>
+</body>
+</html>

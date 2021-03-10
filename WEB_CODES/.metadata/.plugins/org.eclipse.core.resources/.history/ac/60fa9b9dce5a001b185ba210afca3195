@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>멍멍이의 하루</title>
+<link href="<c:url value="/resources/css/default.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/header.css" />"
+	rel="stylesheet">
+</head>
+<body>
+	<header>
+		<div class="container">
+		<div class ="header">
+		<h1>
+			<a href="/hotel">멍멍이의 하루</a>
+		</h1>
+		<h2 class="hide">대메뉴</h2>
+		<h2 class="hide">로그인메뉴</h2>
+		<nav class="spot">
+			<ul>
+				<c:if test="${empty SessionId }">
+					<li><a href="/hotel/log/login">로그인</a></li>
+					<li><a href="/hotel/member/newMember">회원가입</a></li>
+				</c:if>
+				<c:if test="${not empty SessionId }">
+					<li><a href=myPageSelect()>내정보</a></li>
+					<li><a href="/hotel/log/logout">로그아웃</a></li>
+				</c:if>
+
+			</ul>
+		</nav>
+		</div>
+		<div class ="nav">
+			<nav class="lnb">
+				<ul>
+					<li><a href="/hotel/hotelboard/list">메뉴1</a></li>
+					<li><a href="/hotel/hotelboard/register">메뉴2</a></li>
+					<li><a href="practice">메뉴3</a></li>
+					<li><a href="#a">메뉴4</a></li>
+				</ul>
+			</nav>
+		</div>
+		</div>
+	</header>	
+</body>
+</html>

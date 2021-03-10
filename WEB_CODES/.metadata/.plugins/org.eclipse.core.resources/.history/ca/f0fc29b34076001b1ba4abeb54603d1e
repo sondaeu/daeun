@@ -1,0 +1,128 @@
+package ani.project.hotel.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import ani.project.hotel.domain.AllInfoVO;
+import ani.project.hotel.domain.MemberVO;
+import ani.project.hotel.pageutil.AdminMemberCriteria;
+import ani.project.hotel.pageutil.AdminMemberPageMaker;
+import ani.project.hotel.service.AdminService;
+
+@Controller
+@RequestMapping(value="/admin")
+public class AdminController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+
+	@Autowired
+	private AdminService adminService;
+
+	@GetMapping("/checklist")
+	public void GetMain(Model model) { // 관리자 승인전 리스트
+		List<AllInfoVO> list = adminService.read();
+		model.addAttribute("list", list);
+		System.out.println("list : " + list.toString());
+	}
+	
+	@PutMapping("/{numHotel}")
+	public ResponseEntity<String> update(@PathVariable("numHotel") int numHotel) {
+		ResponseEntity<String> entity = null;
+		try {
+			adminService.delete(numHotel);
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>("fail", HttpStatus.OK);
+		}
+		return entity;
+	}
+	
+	@DeleteMapping("/{numHotel}")
+	public ResponseEntity<String> delete(@PathVariable("numHotel") int numHotel) {
+		ResponseEntity<String> entity = null;
+		try {
+			adminService.delete(numHotel);
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>("fail", HttpStatus.OK);
+		}
+		return entity;
+	}
+	
+	@GetMapping("/memberList")
+	public void adminMemberList(Model model, Integer page, Integer perPage,
+							String conditions, String districtName, String hotelName,
+							String checkIn, String checkOut) {
+		AdminMemberCriteria criteria = new AdminMemberCriteria();
+		
+		if(page != null) {
+			criteria.setPage(page);
+		} 
+		if(perPage != null) {
+			criteria.setNumsPerPage(perPage);
+		}
+		if(checkIn != null) {
+			criteria.setCheckIn(checkIn);
+		}
+		if(checkOut != null) {
+			criteria.setCheckOut(checkOut);
+		}
+		if(conditions != null) {
+			criteria.setConditions(conditions);
+		}
+		if(districtName != null) {
+			criteria.setDistrictName(districtName);
+		}
+		if(hotelName != null) {
+			criteria.setHotelName(hotelName);
+		}
+		
+		List<MemberVO> list = adminService.readMember(criteria);
+		model.addAttribute("list", list);
+		
+		AdminMemberPageMaker maker = new AdminMemberPageMaker();
+		maker.setCriteria(criteria);
+		maker.setTotalCount(adminService.getTotalNumsOfMember(criteria));
+		maker.setPageData();
+		int count = adminService.getTotalNumsOfMember(criteria);
+		model.addAttribute("pageMaker", maker);
+		model.addAttribute("count",count);
+		System.out.println(list);
+	}
+	
+	@RequestMapping(value = "/memberUpdate", method= {RequestMethod.GET, RequestMethod.POST})
+	public void memberUpdatePopUp(Model model, HttpServletRequest request) {
+		LOGGER.info("memberUpdatePopUp() 호출");
+	
+		String id = request.getParameter("id");
+		String page = request.getParameter("page");
+		LOGGER.info("id=" + id + "page=" + page);
+		
+		MemberVO vo = adminService.getMember(id);
+		model.addAttribute("memberVO", vo);
+		model.addAttribute("page", page);
+		System.out.println(vo);
+	}
+	
+	@RequestMapping(value = "/memberPostcode", method = { RequestMethod.GET, RequestMethod.POST })
+	public void memberPostcodePopUp() {
+		LOGGER.info("memberPostcodePopUp() 호출");
+	}
+	
+	/* ===== 추가 ===== */
+	/* ===== == ====== */
+}

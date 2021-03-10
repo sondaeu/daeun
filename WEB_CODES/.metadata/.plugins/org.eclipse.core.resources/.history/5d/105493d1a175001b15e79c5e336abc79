@@ -1,0 +1,102 @@
+package ani.project.hotel.controller;
+
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import ani.project.hotel.domain.MemberVO;
+import ani.project.hotel.service.MemberService;
+
+@Controller
+@RequestMapping(value="/log")
+public class LoginController {
+	private static final Logger LOGGER =
+			LoggerFactory.getLogger(LoginController.class);
+	
+	@Autowired
+	private MemberService MemberService;
+	
+	@GetMapping("/login")
+	public void loginGet(String url, Model model) {
+		LOGGER.info("loginGet() 호출");
+		LOGGER.info("url : " + url); // 이전 경로(로그인을 위해 왔던)의 값 출력
+		model.addAttribute("targetUrl", url); // login.jsp에 url 정보 전송
+	}
+	
+
+	
+	@PostMapping("/login-post")
+	public String loginPost(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+		LOGGER.info("loginPost() 호출");
+		
+		HttpSession session = req.getSession();
+		MemberVO result = MemberService.login(vo);
+		
+		// result = vo
+		if(result != null) {
+			session.setAttribute("SessionId", result.getId());
+			session.setAttribute("SessionAuth", result.getAuthority());
+			System.out.println("id : " +result.getId());
+			System.out.println("권한 : " + result.getAuthority());
+			System.out.println(result);
+			return "redirect:/main/aniHotel";
+		} else {
+			return "redirect:/log/login";
+		}
+		
+
+	}
+	
+	@RequestMapping(value="/logout")
+	public String logout(HttpServletRequest req) {
+		LOGGER.info("logout() 호출");
+		
+		HttpSession session = req.getSession();
+		session.removeAttribute("SessionId");
+		session.removeAttribute("SessionAuth");
+		
+		return "redirect:/main/aniHotel";
+	}
+	
+	@RequestMapping(value = "/find", method= {RequestMethod.GET, RequestMethod.POST})
+	public void findIdPw() {
+		LOGGER.info("findIdPw() 호출");
+	}
+	
+	@PostMapping("/idFind")
+	public String idFindPOST(MemberVO vo, RedirectAttributes reAttr) { // RedirectAttributes : 재경로 위치에 속성값을 전송하는 객체
+		LOGGER.info("idFindPOST() 호출 : vo = " + vo);
+		
+		MemberVO result = MemberService.readId(vo);
+		System.out.println(result);
+		if (result != null) { 
+			reAttr.addAttribute("id", result.getId());
+			reAttr.addFlashAttribute("idFind_result", "success");
+			return "redirect:/log/successId"; 
+		} else { // DB insert 실패
+			reAttr.addFlashAttribute("idFind_result", "fail");
+			return "redirect:/log/idFind"; 
+		}
+		
+	}
+	
+	@RequestMapping(value = "/successId", method= {RequestMethod.GET, RequestMethod.POST})
+	public void successId(Model model, HttpServletRequest request) {
+		String id = request.getParameter("id");
+		LOGGER.info("successId() 호출 : id = " + id );
+		model.addAttribute("id", id);
+	}
+		
+}

@@ -1,0 +1,78 @@
+package ani.project.hotel.pageutil;
+
+// 브라우저에서 보여질 페이지 번호와
+// 한 페이지에서 보여질 게시글의 개수를 저장하는 클래스
+// -> paging 처리에 필요한 start와 end 번호를 알 수 있음
+public class AdminMemberCriteria {
+	private int apage; // 현재 페이지 번호
+	private int anumsPerPage; // 한 페이지의 게시글 개수
+	private String aconditions; // 검색옵션
+	private String akeyword; // 검색어
+	
+	public AdminMemberCriteria() {
+		this.apage = 1;
+		this.anumsPerPage = 10;
+		this.aconditions = null;
+		this.akeyword = null;
+	}
+
+	public AdminMemberCriteria(int apage, int anumsPerPage, String aconditions, String akeyword) {
+		super();
+		this.apage = apage;
+		this.anumsPerPage = anumsPerPage;
+		this.aconditions = aconditions;
+		this.akeyword = akeyword;
+	}
+
+	// getter/setter
+	public int getApage() {
+		return apage;
+	}
+
+	public void setApage(int apage) {
+		this.apage = apage;
+	}
+
+	public int getAnumsPerPage() {
+		return anumsPerPage;
+	}
+
+	public void setAnumsPerPage(int anumsPerPage) {
+		this.anumsPerPage = anumsPerPage;
+	}
+
+	public String getAconditions() {
+		return aconditions;
+	}
+
+	public void setAconditions(String aconditions) {
+		this.aconditions = aconditions;
+	}
+
+	public String getAkeyword() {
+		return akeyword;
+	}
+
+	public void setAkeyword(String akeyword) {
+		this.akeyword = akeyword;
+	}
+	
+	// 현재 보여지는 페이지의 시작 글 일련번호(rn)
+	public int getStart() {
+		return (this.apage - 1) * this.anumsPerPage + 1;
+	}
+
+	// 현재 보여지는 페이지의 마지막 글 일련번호(rn)
+	public int getEnd() {
+		return this.apage * this.anumsPerPage;
+	}
+
+	@Override
+	public String toString() {
+		return "AdminMemberCriteria [apage=" + apage + ", anumsPerPage=" + anumsPerPage + ", aconditions="
+				+ aconditions + ", akeyword=" + akeyword + "]";
+	}
+
+	
+
+}

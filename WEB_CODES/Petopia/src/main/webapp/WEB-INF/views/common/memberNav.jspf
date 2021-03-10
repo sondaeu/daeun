@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+
+.aside {
+	background-color: white;
+	float: left;
+	width: 20%;
+	
+}
+
+.myNavWrap{
+
+	border: 1px solid #DDD;
+}
+
+.myNav {
+	
+	color: black;
+	font-size: 14px;
+	padding-left: 25px;
+	line-height: 40px;
+	cursor: pointer;
+}
+
+#mytitle {
+	line-height: 81px;
+	border: 1px solid #DDD;
+	border-bottom: 4px solid #159EFD;
+	color: black;
+	
+}
+
+#mytitle h1{
+	font-size: 30px;
+	
+}
+
+</style>
+</head>
+<body>
+	<div class="aside">
+		<div id="mytitle">
+			<h1>마이페이지</h1>
+		</div>
+		<div class="myNavWrap">
+			<div class="myNav" onclick="location.href='../letter/list'">메세지함</div>
+			<div class="myNav" onclick="location.href='../member/reservationList'">예약목록</div>
+			<div class="myNav" onclick="location.href='../member/update'">개인정보수정</div> 
+			<div class="myNav" onclick="location.href='../member/delete'">회원탈퇴</div>
+		</div>
+	</div>
+</body>
+</html>

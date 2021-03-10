@@ -1,0 +1,174 @@
+package ani.project.hotel.domain;
+
+/*
+COLUM_NAME		DATA-TYPE			NULLABLE	COMMENTS
+ID				VARCHAR2(100 BYTE)	No			아이디(PK)
+PASSWORD		VARCHAR2(100 BYTE)	No			비밀번호 - 영문+숫자 8자리
+NAME			VARCHAR2(100 BYTE)	Yes			이름/업체명
+EMAIL			VARCHAR2(100 BYTE)	Yes			이메일
+CONTACT			VARCHAR2(100 BYTE)	Yes			연락처
+ANIMALS			VARCHAR2(100 BYTE)	Yes 		보유/취급 반려동물 종류
+ZIPCODE			VARCHAR2(100 BYTE)	Yes 		우편번호 - 업체
+ADDRESS			VARCHAR2(100 BYTE)	Yes 		주소 - 업체
+DETAILADDRESS	VARCHAR2(100 BYTE)	Yes			상세주소 - 업체
+BIRTHDAY		VARCHAR2(100 BYTE)	Yes			생년월일 - 개인
+NOTE			VARCHAR2(2000 BYTE)	Yes			메모
+AUTHORITY		VARCHAR2(100 BYTE)	Yes			권한 - 1:관리자, 2:개인, 3:업체
+REGIDATE		VARCHAR2(100 BYTE)	Yes			가입날짜
+DELETION		VARCHAR2(100 BYTE)	Yes 		삭제요청 - 0:X, 1:O
+EXITDATE		VARCHAR2(100 BYTE)	Yes			삭제요청날짜
+ */
+public class MemberVO {
+	private String id;
+	private String password; // 영문 + 숫자 조합 8자리
+	private String name; // 개인:이름, 업체:호텔명
+	private String email;
+	private String contact;
+	private String animals; // 개인:소유 반려동물, 업체:취급 반려동물
+	private String zipcode; // 업체만 사용
+	private String address; // 업체만 사용
+	private String detailaddress; // 업체만 사용
+	private String birthday; // 개인만 사용
+	private String note; // 개인:자기소개, 업체:특이사항(ex. 10kg 미만 펫만 취급)
+	private String authority; // 권한 1:관리자, 2:개인, 3:업체
+	private String regidate; 
+
+	public MemberVO() {
+	}
+
+	public MemberVO(String id, String password, String name, String email, String contact, String animals,
+			String zipcode, String address, String detailaddress, String birthday, String note, int point,
+			String authority) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.contact = contact;
+		this.animals = animals;
+		this.zipcode = zipcode;
+		this.address = address;
+		this.detailaddress = detailaddress;
+		this.birthday = birthday;
+		this.note = note;
+		this.point = point;
+		this.authority = authority;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public String getAnimals() {
+		return animals;
+	}
+
+	public void setAnimals(String animals) {
+		this.animals = animals;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDetailaddress() {
+		return detailaddress;
+	}
+
+	public void setDetailaddress(String detailaddress) {
+		this.detailaddress = detailaddress;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberVO [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", contact="
+				+ contact + ", animals=" + animals + ", zipcode=" + zipcode + ", address=" + address
+				+ ", detailaddress=" + detailaddress + ", birthday=" + birthday + ", note=" + note + ", point=" + point
+				+ ", authority=" + authority + "]";
+	}
+
+	
+
+	
+
+} // end MemberVO

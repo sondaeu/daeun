@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SqlSessionFactoryTest.java&apos; to &apos;Petopia/src/test/java/ani.project.hotel&apos;&#x0D;&#x0A;- Original project: &apos;Spring02&apos;&#x0D;&#x0A;- Destination element: &apos;Petopia/src/test/java/ani.project.hotel&apos;&#x0D;&#x0A;- Original element: &apos;edu.spring.ex02.SqlSessionFactoryTest.java&apos;" description="Copy compilation unit" destination="=Petopia/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/&lt;ani.project.hotel" element1="/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/&lt;edu.spring.ex02{SqlSessionFactoryTest.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1607965656545" units="1" version="1.0"/>
+</session>
